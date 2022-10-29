@@ -92,8 +92,12 @@ class EpeverChargeController(minimalmodbus.Instrument):
         return self.retriable_read_long(0x310E, 4) / 100
 
     def get_battery_current(self):
-        """Battery current in amps"""
+        """Battery current in amps with load usage"""
         return self.retriable_read_long(0x331B, 4, signed=True) / 100
+    
+    def get_real_battery_current(self):
+        """Battery Charge current in amps"""
+        return self.retriable_read_register(0x3105, 2, 4)
 
     def get_battery_voltage(self):
         """Battery voltage"""
@@ -253,6 +257,10 @@ class EpeverChargeController(minimalmodbus.Instrument):
     def get_minimum_battery_voltage_today(self):
         """Minimum battery voltage today"""
         return self.retriable_read_register(0x3303, 2, 4)
+    
+    def get_watt_hour_today(self):
+        """KiloWatt Hours today"""
+        return self.retriable_read_register(0x330C, 2, 4)
 
     def get_rated_charging_current(self):
         """Rated charging current"""
