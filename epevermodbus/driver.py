@@ -260,7 +260,7 @@ class EpeverChargeController(minimalmodbus.Instrument):
     
     def get_watt_hour_today(self):
         """KiloWatt Hours today"""
-        return self.retriable_read_register(0x330C, 2, 4)
+        return self.retriable_read_register(0x330C, 2, 4) * 1000
 
     def get_rated_charging_current(self):
         """Rated charging current"""
