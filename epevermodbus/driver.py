@@ -66,7 +66,19 @@ class EpeverChargeController(minimalmodbus.Instrument):
     @retry(wait_fixed=200, stop_max_attempt_number=5)
     def retriable_read_bit(self, registeraddress, functioncode):
         return self.read_bit(registeraddress, functioncode)
+    
+    def get_battery_fault(self):
+        """Charging equipment status"""
+        return self.retriable_read_register(0x3200, 0, 4)   
 
+    def get_charge_status(self):
+        """Charging equipment status"""
+        return self.retriable_read_register(0x3201, 0, 4)   
+    
+    def get_load_status(self):
+        """Charging equipment status"""
+        return self.retriable_read_register(0x3202, 0, 4)   
+     
     def get_solar_voltage(self):
         """PV array input in volts"""
         return self.retriable_read_register(0x3100, 2, 4)
